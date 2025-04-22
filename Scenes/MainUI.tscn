@@ -59,6 +59,7 @@ title = "Open a Directory"
 ok_button_text = "Select Current Folder"
 file_mode = 2
 access = 2
+use_native_dialog = true
 
 [node name="FileButton" type="Button" parent="."]
 layout_mode = 1
@@ -80,7 +81,8 @@ title = "Open a File"
 ok_button_text = "Open"
 file_mode = 0
 access = 2
-filters = PackedStringArray("*.gif")
+filters = PackedStringArray("*.gif", "*.mp4")
+use_native_dialog = true
 
 [node name="ConvertButton" type="Button" parent="."]
 layout_mode = 0
@@ -110,3 +112,4 @@ position = Vector2(457, 174)
 [connection signal="pressed" from="FileButton" to="." method="_on_button_pressed"]
 [connection signal="file_selected" from="FileButton/FileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="pressed" from="ConvertButton" to="." method="_on_button_2_pressed"]
+[connection signal="finished" from="VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]

@@ -7,6 +7,8 @@ extends Panel
 @onready var textedit = $Filename
 var exportpath : String 
 var filename : String 
+var inputfile : String
+var outputfile : String
 var frames : Array = []
 
 func _ready():
@@ -28,28 +30,15 @@ func _process(delta: float) -> void:
 		if tex:
 			var img = tex.get_image()
 			if img and not img.is_empty():
-				var stageframes = img.duplicate()
-				stageframes.convert(Image.FORMAT_RGBA8)
-				var new_width = stageframes.get_width() + 620 
-				var new_height = stageframes.get_height() + 200 
-				var expanded = Image.new()
-				expanded.create(new_width, new_height, false, Image.FORMAT_RGBA8)
-				expanded.fill(Color(0, 0, 0, 0)) # Transparente
-				expanded.blit_rect(stageframes, Rect2(Vector2.ZERO, stageframes.get_size()), Vector2(50,50))
-				frames.append(expanded)
-				
+				frames.append(img.duplicate())
 
 
 func _on_file_dialog_file_selected(path: String) -> void:
-	$FileLabel.text = path
-	var output_path = path.get_basename() + ".ogv"
-	convert_gif_to_ogv(path, output_path)
-	await get_tree().create_timer(1.5).timeout  # Esperamos un poco por la conversión
-	if FileAccess.file_exists(output_path):
-		streamplayer.stream = VideoStreamTheora.new()
-		streamplayer.stream = load(output_path)
-		streamplayer.play()
-	else:
+	frames = []
+	inputfile = path
+	$FileLabel.text = inputfile
+	outputfile = path.get_basename() + ".ogv"
+	if !FileAccess.file_exists(outputfile):
 		push_error("No se pudo convertir el archivo.")
 
 func convert_gif_to_ogv(input_path: String, output_path: String):
@@ -84,15 +73,13 @@ func _on_button_pressed() -> void:
 
 
 func _on_button_2_pressed() -> void:
-	for x in frames.size():
-		var texture = frames[x]
-		if exportpath and filename and Output:
-			texture.save_png(exportpath + "/"+ filename + "-" + str(x)+ ".png")
-		else:
-			popup.title = "Error"
-			popup.dialog_text = "You haven't specified an output path or filename"
-			popup.ok_button_text = "Close"
-			popup.popup_centered()
+	print(inputfile)
+	print(outputfile)
+	convert_gif_to_ogv(inputfile, outputfile)
+	if FileAccess.file_exists(outputfile):
+		streamplayer.stream = VideoStreamTheora.new()
+		streamplayer.stream = load(outputfile)
+		streamplayer.play()
 
 
 func _on_output_button_pressed() -> void:
@@ -107,3 +94,16 @@ func _on_output_dialogue_dir_selected(dir: String) -> void:
 
 func _on_filename_text_changed() -> void:
 	filename = textedit.text
+
+
+func _on_video_stream_player_finished() -> void:
+	for x in frames.size():
+		var texture = frames[x]
+		if exportpath and filename:
+			texture.save_png(exportpath + "/"+ filename + "-" + str(x)+ ".png")
+		else:
+			popup.title = "Error"
+			popup.dialog_text = "You haven't specified an output path or filename"
+			popup.ok_button_text = "Close"
+			popup.popup_centered()
+	
