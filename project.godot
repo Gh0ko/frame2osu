@@ -10,7 +10,14 @@ config_version=5
 
 [application]
 
-config/name="Godot Gif Splitter"
+config/name="Video Splitter Osu"
 run/main_scene="uid://dt8pgcgivkhsk"
 config/features=PackedStringArray("4.4", "Forward Plus")
+boot_splash/show_image=false
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"

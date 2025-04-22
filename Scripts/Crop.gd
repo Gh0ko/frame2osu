@@ -14,7 +14,7 @@ var frames : Array = []
 func _ready():
 	Dialog.access = FileDialog.ACCESS_FILESYSTEM
 	Dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
-	Dialog.filters = ["*.gif"]
+	Dialog.filters = ["*.gif","*.mp4","*.avi","*.flv", "*.mov"]
 	Dialog.connect("file_selected", Callable(self, "_on_file_selected"))
 	
 func _input(event):
