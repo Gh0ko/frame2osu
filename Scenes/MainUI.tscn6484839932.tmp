@@ -1,0 +1,54 @@
+[gd_scene load_steps=4 format=3 uid="uid://dt8pgcgivkhsk"]
+
+[ext_resource type="Script" uid="uid://dar3don66ix88" path="res://Scripts/Crop.gd" id="1_xh0hd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xh0hd"]
+
+[sub_resource type="VideoStreamTheora" id="VideoStreamTheora_yd0xa"]
+
+[node name="Panel" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xh0hd")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -503.0
+offset_top = -578.0
+offset_right = -293.0
+offset_bottom = -499.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Choose File"
+
+[node name="FileDialog" type="FileDialog" parent="Button"]
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.gif")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(698, 311)
+texture = SubResource("AtlasTexture_xh0hd")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+layout_mode = 0
+offset_left = 410.0
+offset_top = 175.0
+offset_right = 810.0
+offset_bottom = 575.0
+stream = SubResource("VideoStreamTheora_yd0xa")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="file_selected" from="Button/FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="texture_changed" from="Sprite2D" to="." method="_on_sprite_2d_texture_changed"]
+[connection signal="finished" from="VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]

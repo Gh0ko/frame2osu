@@ -1,0 +1,112 @@
+[gd_scene load_steps=3 format=3 uid="uid://dt8pgcgivkhsk"]
+
+[ext_resource type="Script" uid="uid://dar3don66ix88" path="res://Scripts/Crop.gd" id="1_xh0hd"]
+
+[sub_resource type="VideoStreamTheora" id="VideoStreamTheora_yd0xa"]
+
+[node name="Panel" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xh0hd")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 695.0
+offset_top = 153.0
+offset_right = 916.0
+offset_bottom = 176.0
+text = "I.E: godot_ex-0, godot_ex-1, godot_ex-2"
+
+[node name="Filename" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 692.0
+offset_top = 99.0
+offset_right = 1092.0
+offset_bottom = 139.0
+placeholder_text = "Filename Prefix"
+use_custom_word_separators = true
+custom_word_separators = "_"
+
+[node name="FileLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 24.0
+offset_right = 520.0
+offset_bottom = 74.0
+text = "\"...\""
+
+[node name="OutputLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 287.0
+offset_right = 528.0
+offset_bottom = 337.0
+text = "\"...\""
+
+[node name="OutputButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 209.0
+offset_top = 365.0
+offset_right = 419.0
+offset_bottom = 444.0
+text = "Choose Output"
+
+[node name="OutputDialogue" type="FileDialog" parent="OutputButton"]
+title = "Open a Directory"
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+
+[node name="FileButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -371.0
+offset_top = -557.0
+offset_right = -161.0
+offset_bottom = -478.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Choose File"
+
+[node name="FileDialog" type="FileDialog" parent="FileButton"]
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.gif")
+
+[node name="ConvertButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 734.0
+offset_top = 526.0
+offset_right = 944.0
+offset_bottom = 605.0
+text = "Convert"
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 410.0
+offset_top = 175.0
+offset_right = 810.0
+offset_bottom = 575.0
+stream = SubResource("VideoStreamTheora_yd0xa")
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(457, 174)
+
+[connection signal="text_changed" from="Filename" to="." method="_on_filename_text_changed"]
+[connection signal="pressed" from="OutputButton" to="." method="_on_output_button_pressed"]
+[connection signal="dir_selected" from="OutputButton/OutputDialogue" to="." method="_on_output_dialogue_dir_selected"]
+[connection signal="pressed" from="FileButton" to="." method="_on_button_pressed"]
+[connection signal="file_selected" from="FileButton/FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="pressed" from="ConvertButton" to="." method="_on_button_2_pressed"]
