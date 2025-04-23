@@ -12,6 +12,35 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xh0hd")
 
+[node name="CheckButton" type="CheckButton" parent="."]
+layout_mode = 0
+offset_left = 777.0
+offset_top = 371.0
+offset_right = 821.0
+offset_bottom = 395.0
+
+[node name="Stageside" type="Label" parent="."]
+layout_mode = 0
+offset_left = 697.0
+offset_top = 370.0
+offset_right = 777.0
+offset_bottom = 393.0
+text = "Stage Side"
+
+[node name="Stageoptions" type="OptionButton" parent="."]
+layout_mode = 0
+offset_left = 695.0
+offset_top = 402.0
+offset_right = 814.0
+offset_bottom = 433.0
+disabled = true
+selected = 1
+item_count = 2
+popup/item_0/text = "Left Stage"
+popup/item_0/id = 0
+popup/item_1/text = "Right Stage"
+popup/item_1/id = 1
+
 [node name="Framerate" type="Label" parent="."]
 layout_mode = 0
 offset_left = 694.0
@@ -44,6 +73,7 @@ offset_left = 692.0
 offset_top = 99.0
 offset_right = 1092.0
 offset_bottom = 139.0
+text = "mania-stage-bottom"
 placeholder_text = "Filename Prefix"
 use_custom_word_separators = true
 custom_word_separators = "_"
@@ -121,6 +151,8 @@ stream = SubResource("VideoStreamTheora_yd0xa")
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 
+[connection signal="toggled" from="CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="item_selected" from="Stageoptions" to="." method="_on_stageoptions_item_selected"]
 [connection signal="value_changed" from="Frameratebox" to="." method="_on_frameratebox_value_changed"]
 [connection signal="text_changed" from="Filename" to="." method="_on_filename_text_changed"]
 [connection signal="pressed" from="OutputButton" to="." method="_on_output_button_pressed"]

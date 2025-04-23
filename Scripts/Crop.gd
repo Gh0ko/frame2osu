@@ -6,10 +6,12 @@ extends Panel
 @onready var streamplayer = $VideoStreamPlayer
 @onready var textedit = $Filename
 var exportpath : String 
-var filename : String 
+var filename : String = "mania-stage-bottom"
 var inputfile : String
 var outputfile : String
 var framerate : String
+var stage_side : int = 1
+var stage_bottom : bool = false
 
 func _ready():
 	Dialog.access = FileDialog.ACCESS_FILESYSTEM
@@ -34,17 +36,24 @@ func convert_gif_to_ogv(input_path: String, output_path: String):
 	var args = [
 		"-r", "1",
 		"-i", input_path,
+		"-vf", padding,
 		"-r", framerate,
-		output_path,
+		"-start_number", 0,
+		output_path
 	]
 	var result = OS.execute(ffmpeg_path, args,[], false)
 	if result != 0:
 		push_error("Error ejecutando FFmpeg (código " + str(result) + ")")
 
 func get_padding():
-	var image_width = "iw"
-	var image_heigth = "ih"
-	
+	if stage_bottom:
+		if stage_side == 0:
+			return "pad=width=iw+620:height=ih+200:x=0:y=200:color=0x00000000"
+		else:
+			return "pad=width=iw+620:height=ih+200:x=620:y=200:color=0x00000000"
+	else:
+		return "pad=width=iw:height=ih:x=0:y=0"
+
 func get_ffmpeg_path() -> String:
 	var os_name = OS.get_name()
 
@@ -95,4 +104,11 @@ func _on_filename_text_changed() -> void:
 	filename = textedit.text
 func _on_frameratebox_value_changed(value: float) -> void:
 	framerate = str(value)
-	
+func _on_stageoptions_item_selected(index: int) -> void:
+	stage_side = index
+func _on_check_button_toggled(toggled_on: bool) -> void:
+	stage_bottom = toggled_on
+	if toggled_on:
+		$Stageoptions.disabled = false
+	else:
+		$Stageoptions.disabled = true
