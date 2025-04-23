@@ -12,13 +12,31 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xh0hd")
 
+[node name="Framerate" type="Label" parent="."]
+layout_mode = 0
+offset_left = 694.0
+offset_top = 228.0
+offset_right = 775.0
+offset_bottom = 251.0
+text = "Images per frame"
+
+[node name="Frameratebox" type="SpinBox" parent="."]
+layout_mode = 0
+offset_left = 696.0
+offset_top = 259.0
+offset_right = 782.563
+offset_bottom = 290.0
+max_value = 1000.0
+rounded = true
+
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
 offset_left = 695.0
-offset_top = 153.0
-offset_right = 916.0
-offset_bottom = 176.0
-text = "I.E: godot_ex-0, godot_ex-1, godot_ex-2"
+offset_top = 146.0
+offset_right = 1051.0
+offset_bottom = 195.0
+text = "example: filename = godot
+output: godot-0.png, godot-1.png, godot-2.png"
 
 [node name="Filename" type="TextEdit" parent="."]
 layout_mode = 0
@@ -48,10 +66,10 @@ text = "\"...\""
 
 [node name="OutputButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 209.0
-offset_top = 365.0
-offset_right = 419.0
-offset_bottom = 444.0
+offset_left = 270.0
+offset_top = 354.0
+offset_right = 480.0
+offset_bottom = 433.0
 text = "Choose Output"
 
 [node name="OutputDialogue" type="FileDialog" parent="OutputButton"]
@@ -103,13 +121,11 @@ stream = SubResource("VideoStreamTheora_yd0xa")
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(457, 174)
-
+[connection signal="value_changed" from="Frameratebox" to="." method="_on_frameratebox_value_changed"]
 [connection signal="text_changed" from="Filename" to="." method="_on_filename_text_changed"]
 [connection signal="pressed" from="OutputButton" to="." method="_on_output_button_pressed"]
 [connection signal="dir_selected" from="OutputButton/OutputDialogue" to="." method="_on_output_dialogue_dir_selected"]
 [connection signal="pressed" from="FileButton" to="." method="_on_button_pressed"]
 [connection signal="file_selected" from="FileButton/FileDialog" to="." method="_on_file_dialog_file_selected"]
-[connection signal="pressed" from="ConvertButton" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="ConvertButton" to="." method="_on_convert_button_pressed"]
 [connection signal="finished" from="VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
