@@ -56,12 +56,12 @@ func get_padding():
 
 func get_ffmpeg_path() -> String:
 	var os_name = OS.get_name()
-
+	var executable = OS.get_executable_path() 
 	match os_name:
 		"Windows":
-			return ProjectSettings.globalize_path("res://bin/ffmpeg.exe")
+			return ProjectSettings.globalize_path(executable.get_base_dir()+"/ffmpeg.exe")
 		"Linux", "macOS":
-			return ProjectSettings.globalize_path("res://bin/ffmpeg")  # Si querés agregar builds para esos SO también
+			return ProjectSettings.globalize_path(executable.get_base_dir()+"/ffmpeg") 
 		_:
 			push_error("Sistema operativo no soportado")
 			return ""
