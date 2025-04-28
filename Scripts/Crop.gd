@@ -1,10 +1,13 @@
 extends Panel
 
-@onready var Dialog = $FileButton/FileDialog
-@onready var Output = $OutputButton/OutputDialogue
+@onready var Dialog = $MarginContainer/HSplitContainer/l/VBoxContainer/MarginContainer/VBoxContainer2/ScrollContainer/VBoxContainer/input/FileButton/FileDialog
+@onready var Output = $MarginContainer/HSplitContainer/l/VBoxContainer/MarginContainer/VBoxContainer2/ScrollContainer/VBoxContainer/output/OutputButton/OutputDialogue
 @onready var popup = $AcceptDialog
 @onready var streamplayer = $VideoStreamPlayer
-@onready var textedit = $Filename
+@onready var textedit = $MarginContainer/HSplitContainer/l/VBoxContainer/MarginContainer/VBoxContainer2/ScrollContainer/VBoxContainer/VBoxContainer/Filename
+@onready var filelabel = $MarginContainer/HSplitContainer/l/VBoxContainer/MarginContainer/VBoxContainer2/ScrollContainer/VBoxContainer/input/ColorRect/MarginContainer/FileLabel
+@onready var output_label: Label = $MarginContainer/HSplitContainer/l/VBoxContainer/MarginContainer/VBoxContainer2/ScrollContainer/VBoxContainer/output/ColorRect/MarginContainer/OutputLabel
+
 var exportpath : String 
 var filename : String = "mania-stage-bottom"
 var inputfile : String
@@ -14,6 +17,7 @@ var stage_side : int = 1
 var stage_bottom : bool = false
 
 func _ready():
+	print("hola")
 	Dialog.access = FileDialog.ACCESS_FILESYSTEM
 	Dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
 	Dialog.filters = ["*.gif","*.mp4","*.avi","*.flv", "*.mov"]
@@ -28,7 +32,7 @@ func _input(event):
 
 func _on_file_dialog_file_selected(path: String) -> void:
 	inputfile = path
-	$FileLabel.text = inputfile
+	filelabel.text = inputfile
 
 func convert_gif_to_ogv(input_path: String, output_path: String):
 	var ffmpeg_path = get_ffmpeg_path()
@@ -99,7 +103,7 @@ func _on_output_button_pressed() -> void:
 	Output.popup_centered()
 func _on_output_dialogue_dir_selected(dir: String) -> void:
 	exportpath = dir
-	$OutputLabel.text = dir
+	output_label.text = dir
 func _on_filename_text_changed() -> void:
 	filename = textedit.text
 func _on_frameratebox_value_changed(value: float) -> void:
@@ -109,6 +113,6 @@ func _on_stageoptions_item_selected(index: int) -> void:
 func _on_check_button_toggled(toggled_on: bool) -> void:
 	stage_bottom = toggled_on
 	if toggled_on:
-		$Stageoptions.disabled = false
+		$MarginContainer/HSplitContainer/l/VBoxContainer/MarginContainer/VBoxContainer2/ScrollContainer/VBoxContainer/stageside/Stageoptions.disabled = false
 	else:
-		$Stageoptions.disabled = true
+		$MarginContainer/HSplitContainer/l/VBoxContainer/MarginContainer/VBoxContainer2/ScrollContainer/VBoxContainer/stageside/Stageoptions.disabled = true
