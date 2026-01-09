@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Video Splitter Osu"
 run/main_scene="uid://dt8pgcgivkhsk"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 boot_splash/show_image=false
 config/icon="res://icon.svg"
 
