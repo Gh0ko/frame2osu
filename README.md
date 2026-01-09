@@ -14,4 +14,4 @@ The filename is the prefix for the images for example if filename is "cursor" th
 Stage side is specifically for mania_stage_bottom because is the only animatable element on gameplay, it makes a transparent padding on the images to offset them to one side  
 ## To-Do:
 - ~~Add stage option to make animation on the side of the stage~~ Done
-- Rework UI
+- ~~Rework UI~~ Done... but still need another rework i think
